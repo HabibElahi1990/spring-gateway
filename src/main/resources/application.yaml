@@ -1,0 +1,28 @@
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:5050/eureka
+  instance:
+    prefer-ip-address: true
+server:
+  port: 1010
+spring:
+  application:
+    name: SPRING-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: PERSON-SERVICE
+          uri: lb://PERSON-SERVICE
+          predicates:
+            - Path=/person/**
+        - id: Draft-SERVICE
+          uri: lb://DRAFT-SERVICE
+          predicates:
+              - Path=/draft/**
+        - id: payment-service
+          uri: lb://PAYMENT-SERVICE
+          predicates:
+              - Path=/payment/**
